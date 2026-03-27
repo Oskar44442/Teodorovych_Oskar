@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Список</title>
+</head>
+<body>
+
+<input type="text" id="input">
+<button id="add">Додати</button>
+<button id="sort">Сортувати</button>
+
+<ul id="list"></ul>
+
+<script>
+let input = document.getElementById("input");
+let list = document.getElementById("list");
+
+document.getElementById("add").onclick = function() {
+    let value = input.value.trim();
+
+    if (value === "") return;
+
+    let li = document.createElement("li");
+    li.textContent = value;
+
+    li.onclick = function() {
+        li.remove();
+    };
+
+    list.appendChild(li);
+    input.value = "";
+};
+
+document.getElementById("sort").onclick = function() {
+    let items = Array.from(list.children);
+
+    items.sort(function(a, b) {
+        return a.textContent.localeCompare(b.textContent);
+    });
+
+    list.innerHTML = "";
+
+    items.forEach(function(item) {
+        list.appendChild(item);
+    });
+};
+</script>
+
+</body>
+</html>
