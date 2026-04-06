@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Варіант 2</title>
+</head>
+<body>
+
+<script>
+function getRandomNumber() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const num = Math.floor(Math.random() * 100) + 1;
+      resolve(num);
+    }, 1000);
+  });
+}
+
+async function processNumber() {
+  try {
+    const number = await getRandomNumber();
+    console.log("Отримане число:", number);
+
+    if (number < 50) {
+      return Promise.resolve(number + 20);
+    } else {
+      return Promise.reject("Занадто велике число!");
+    }
+  } catch (error) {
+    console.log("Помилка:", error);
+    return "Оброблено помилку";
+  }
+}
+
+// автоматичний запуск
+processNumber().then(result => {
+  console.log("Результат:", result);
+});
+</script>
+
+</body>
+</html>
