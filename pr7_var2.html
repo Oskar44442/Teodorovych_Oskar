@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Лічильник відвідувань</title>
+<style>
+body { font-family: Arial; padding: 20px; }
+button { margin: 10px 0; padding: 8px 12px; }
+table { border-collapse: collapse; margin-top: 10px; }
+td, th { border: 1px solid #ccc; padding: 6px 10px; }
+</style>
+</head>
+<body>
+
+<h2>Кількість відвідувань: <span id="count">0</span></h2>
+<button id="reset">Скинути історію</button>
+
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Дата</th>
+</tr>
+</thead>
+<tbody id="history"></tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let count = localStorage.getItem("count");
+    let history = localStorage.getItem("history");
+
+    count = count ? parseInt(count) : 0;
+    history = history ? JSON.parse(history) : [];
+
+    count++;
+    history.push(new Date().toLocaleString());
+
+    localStorage.setItem("count", count);
+    localStorage.setItem("history", JSON.stringify(history));
+
+    document.getElementById("count").textContent = count;
+
+    const tbody = document.getElementById("history");
+    history.forEach((item, index) => {
+        let row = `<tr><td>${index + 1}</td><td>${item}</td></tr>`;
+        tbody.innerHTML += row;
+    });
+
+    document.getElementById("reset").onclick = () => {
+        localStorage.clear();
+        location.reload();
+    };
+});
+</script>
+
+</body>
+</html>
